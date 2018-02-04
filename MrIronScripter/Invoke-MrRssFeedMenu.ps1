@@ -81,19 +81,13 @@ Enter the number to display the article in the desired option
 
     switch ($OutputType) {
         1 {
-            Start-Process ($Results[$Post-1]).link
+            Start-Process -FilePath ($Results[$Post-1]).link
             Clear-Host
             break
           }
         2 {
-            if ($PSVersionTable.PSEdition -eq 'Core') {
-                Clear-Host
-                ($Results[$Post-1]).InnerText.ToString() -replace "\t.*|`n|<[^>]*>|/\s\s+/g|^\s+|\s+$"
-            }
-            else {
-                Clear-Host
-                (Invoke-WebRequest -Uri $Results[$Post-1].link).ParsedHtml.body.getElementsByClassName('entry-content')[0].InnerText.Trim() -replace 'Views.*'
-            }
+            Clear-Host
+            ($Results[$Post-1]).InnerText.ToString() -replace '\t.*|\n|<[^>]*>|/\s\s+/g|^\s+|\s+$'
             break
           }
         3 {
